@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.Lsrs.reservation.Mapper.ReservationMapper">
+    <select id="selecttime" resultType="java.lang.Integer">
+        SELECT  COUNT(`seat_number`) as 'count'
+        FROM sys_reservation.seat_reservation
+        WHERE
+            zone_number = #{zoneNumber}
+            AND status IN (1, 3)
+            AND   #{endTime}>start_time
+            AND   end_time>#{endTime}
+
+
+</select><select id="getreseRvationCountbytime" resultType="java.lang.Integer">
+  select  count(user_id)  AS 'count'
+  from  sys_reservation.seat_reservation
+  <where>
+  <if test="startTime !=null ">
+  #{startTime}&lt;=start_time
+  </if>
+  <if test="endTime !=null ">
+  and end_time &lt;= #{endTime}
+  </if>
+  <if test="status !=null ">
+  and status=#{status}
+</if>
+  <if test="zoneNumber !=null ">
+   and zone_number=#{zoneNumber}
+</if>
+</where>
+</select><select id="getreseRvationCountbycreattime" resultType="java.lang.Integer">
+ select  count(user_id)  AS 'count'
+  from  sys_reservation.seat_reservation
+  <where>
+  <if test="startTime !=null ">
+  #{startTime}&lt;=created_at
+  </if>
+  <if test="endTime !=null ">
+  and created_at &lt;= #{endTime}
+  </if>
+
+
+
+
+</where>
+
+</select><select id="getroomrank" resultType="java.lang.Integer">
+ select  zone_number
+ from  sys_reservation.seat_reservation
+ <where>
+  <if test="startTime !=null ">
+      start_time >= #{startTime}
+</if>
+<if test="endTime !=null">
+     and end_time &lt;= #{endTime}
+</if>
+</where>
+ group by zone_number limit #{number}
+</select>
+<select id="getReservation" resultType="com.example.pojo.SeatReservation">
+select * from sys_reservation.seat_reservation
+<where>
+  <if test="startTime !=null ">
+      start_time>=#{startTime}
+</if>
+<if test="endTime!= null">
+    and  #{endTime} >= end_time
+</if>
+<if test="status != null">
+   and status=#{status}
+</if>
+</where>
+order by user_id asc
+  limit #{limit1},10
+
+
+
+
+
+</select>
+
+
+
+
+
+</mapper>

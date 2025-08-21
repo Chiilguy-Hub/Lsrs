@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.Lsrs.user.Mapper.UserMapper">
+
+<select id="getusercount" resultType="java.lang.Integer">
+  select count(wechat_openid)   from sys_user.library_user
+<where>
+   <if test="startTime !=null ">  created_at>=#{startTime}
+</if>
+<if test="endTime !=null ">  and #{endTime}>=created_at
+</if>
+</where>
+
+</select><select id="getUserList" resultType="com.example.pojo.User">
+select  user_id,user_img,user_name,user_faculty,user_major,real_name,phone,total_reservations,violation_count from sys_user.library_user
+<where>
+  <if test="userId !=null ">
+      user_id=#{userId}
+</if>
+<if test="phone != null">
+    and    phone =#{phone}
+
+</if>
+<if test="realName != null">
+   and real_name like  '%${realName}%'
+</if>
+</where>
+order by user_id asc
+  limit #{lim},#{lim1}
+
+</select>
+<update id="updateUserByUserId" parameterType="com.example.pojo.User">
+ update sys_user.library_user
+<set>
+  <if test="userId != null and userId != '' ">
+   user_id=#{userId,jdbcType=VARCHAR},
+</if>
+<if test="phone != null and phone != '' ">
+ phone=#{phone},
+</if>
+<if test="userFaculty != null and userFaculty != ''">
+   user_faculty =#{userFaculty,jdbcType=VARCHAR},
+</if>
+<if test="userMajor != null and userMajor != ''">
+   user_major=#{userMajor,jdbcType=VARCHAR},
+</if>
+<if test="totalReservations != null">
+  total_reservations=#{totalReservations},
+</if>
+<if test="violationCount != null">
+violation_count=#{violationCount}
+</if>
+
+</set>
+where user_id=#{userId,jdbcType=VARCHAR}
+</update>
+
+</mapper>

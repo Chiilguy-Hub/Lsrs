@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.Lsrs.resource.Mapper.ResourceMapper">
+
+<select id="getRoom" resultType="com.Lsrs.resource.pojo.room_seat">
+select *  from sys_room.room_seats
+<where>
+  <if test="zoneNumber !=null">
+  zone_number=#{zoneNumber}
+</if>
+
+</where>
+  limit #{limit1},20
+
+</select>
+<select id="getqrseat" resultType="com.example.Dao.QrRequest">
+ select seat_floor,zone_number,seat_number from sys_room.room_seats
+<where>
+    <if test="seatFloor !=null">
+     seat_floor=#{seatFloor}
+</if>
+<if test="zoneNumber !=null">
+  and zone_number=#{zoneNumber}
+</if>
+   <if test="seatNumber !=null">
+   and seat_number =#{seatNumber}
+</if>
+</where>
+
+
+</select>
+
+</mapper>

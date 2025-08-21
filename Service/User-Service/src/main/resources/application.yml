@@ -1,0 +1,23 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    password: 123456
+    username: root
+    #这里要更改数据库只需要更改voredb那个地方就可以了
+    url: jdbc:mysql://localhost:3306/sys_user?&useSSL=true&useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+
+  data:
+    redis:
+      port: 6379
+      password: 123456
+      host: localhost
+      database: 0
+  servlet:
+    multipart:
+      max-file-size: 10MB     # 单个文件最大大小
+      max-request-size: 10MB  # 整个请求最大大小
+
+logging:
+  level:
+    com/Lsrs/user/Mapper: debug  # 替换为你的 Mapper 包路径
+

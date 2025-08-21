@@ -1,0 +1,44 @@
+spring:
+  cloud:
+    gateway:
+      filter:
+        security
+
+      routes:
+        - id: Check-in-route
+          uri: lb://Check-in-Service
+          predicates: #断定
+            - Path=/api/check-in/**
+        - id: Admin-route
+          uri: lb://Admin-Service
+          predicates: #断定
+            - Path=/Admin/**
+        - id: Reservation-route
+          uri: lb://Reservation-Service
+          predicates: #断定
+            - Path=/api/reservation/**
+        - id: Resource-route
+          uri: lb://Resource-Service
+          predicates: #断定
+            - Path=/api/resource/**
+        - id: User-route
+          uri: lb://User-Service
+          predicates: #断定
+            - Path=/api/user/**
+        - id: Login-route
+          uri: lb://Login-Service
+          predicates: #断定
+            - Path=/api/weixin/**
+        - id: Notice-route
+          uri: lb://Notice-Service
+          predicates:
+            - Path=/api/notice/**
+        - id: Feedback-route
+          uri: lb://Feedback-Service
+          predicates:
+            - Path=/api/feedback/**
+        - id: Setnotice-route
+          uri: lb://Setnotice-Service
+          predicates:
+            - Path=/api/setnotice/**
+
